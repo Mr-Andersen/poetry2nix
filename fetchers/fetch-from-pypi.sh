@@ -12,16 +12,11 @@ curl="curl            \
  --cookie-jar cookies \
  --insecure           \
  --speed-time 5       \
- --progress-bar       \
+ --no-progress-meter  \
  --fail               \
  $curlOpts            \
  $NIX_CURL_FLAGS"
 
-echo "Trying to fetch with predicted URL: $predictedURL"
-
-$curl "$predictedURL" --output "$out" && exit 0
-
-echo "Predicted URL '$predictedURL' failed, querying pypi.org"
 $curl "https://pypi.org/pypi/$pname/json" | jq -r ".releases.\"$version\"[] | select(.filename == \"$file\") | .url" > url
 url=$(cat url)
 $curl "$url" --output "$out"
