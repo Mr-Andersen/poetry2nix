@@ -298,7 +298,7 @@ lib.fix (self: {
         platform.isLinux && arch == platform.linuxArch
       )
     else
-      throw "Unknown platform tag: '${platformTag}'";
+      lib.warn "Unknown platform tag: '${platformTag}'" false;
 
   /*
     Check whether a Python language tag is compatible with this Python interpreter.
